@@ -1,4 +1,4 @@
-# visDial-principles
+# VisDial-principles
 
 The codes are based on https://github.com/batra-mlp-lab/visdial
 
