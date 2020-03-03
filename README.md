@@ -1,5 +1,5 @@
 # VisDial-principles
 
-The codes are based on https://github.com/batra-mlp-lab/visdial
+The code is based on https://github.com/batra-mlp-lab/visdial
 
-Codes will be released as soon as possiple.
+Code will be released as soon as possiple.
