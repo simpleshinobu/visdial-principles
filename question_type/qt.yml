@@ -1,0 +1,39 @@
+# Dataset reader arguments
+dataset:
+  image_features_train_h5: 'data/features_faster_rcnn_x101_train.h5'
+  image_features_val_h5: 'data/features_faster_rcnn_x101_val.h5'
+  image_features_test_h5: 'data/features_faster_rcnn_x101_test.h5'
+  word_counts_json: 'data/visdial_1.0_word_counts_train.json'
+  tokens_path: 'data/tokens.json'
+  img_norm: 1
+  concat_history: false
+  max_sequence_length: 20
+  vocab_min_count: 5
+
+
+# Model related arguments
+model:
+  encoder: 'baseline_encoder_withP1'
+  decoder: 'disc_qt'
+
+  img_feature_size: 2048
+  word_embedding_size: 300
+  lstm_hidden_size: 512
+  lstm_num_layers: 2
+  head_num: 3
+  dropout: 0.4 # change 0.4 to 0.3, because a smaller lr (about 0.3) is better
+  dropout_fc: 0.25 # change 0.25 to 0.1, because a smaller lr (about 0.1) is better
+
+
+# Optimization related arguments
+solver:
+  batch_size: 128 # 64 x num_gpus is a good rule of thumb
+  num_epochs: 6
+  initial_lr: 0.004 # general is 0.004
+  training_splits: "train"
+  lr_gamma: 0.4
+  lr_milestones: # epochs when lr —> lr * lr_gamma
+    - 2
+    - 5
+  warmup_factor: 0.2
+  warmup_epochs: 1
