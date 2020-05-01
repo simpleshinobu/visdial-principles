@@ -86,7 +86,7 @@ python train_dict_stage1.py --save-model
 python train_dict_stage2.py --save-model --load-pthpath <pretrained dict from stage1>
 python train_dict_stage3.py --load-dict-pthpath <pretrained dict from stage1> --load-pthpath checkpoints/baseline_withP1_checkpiont5.pth
 ```
-Besides, after our code optimization, some implementations can get a little bit better results, but do not influence the conclusions of our principles. If you think the MRR score is too low, you can try to fuse the output logits of baseline and finetuned baseline with the formula: sigmoid(logit(ft))*(sigmoid(logit(base))+0.2) (empirical formula) (which can achieve MRR ~61 and NDCG ~72). Note that their effects should be carefully fused, not directly added.
+Besides, after our code optimization, some implementations can get a little bit better results, but do not influence the conclusions of our principles. If you think the MRR score is too low, you can try train with larger one-hot weight to keep MRR.
 
 #### Evaluation
 You can directly evaluate a model use the following code: (please check the settings in configs/evaluate.yml)
