@@ -86,7 +86,7 @@ python train_dict_stage1.py --save-model
 python train_dict_stage2.py --save-model --load-pthpath <pretrained dict from stage1>
 python train_dict_stage3.py --load-dict-pthpath <pretrained dict from stage1> --load-pthpath checkpoints/baseline_withP1_checkpiont5.pth
 ```
-Besides, after our code optimization, some implementations can get a little bit better results, but do not influence the conclusions of our principles. If you think the MRR score is too low, you can try train with larger one-hot weight to keep MRR.
+Besides, after our code optimization, some implementations can get a little bit better results, but do not influence the conclusions of our principles. If you think the MRR score is too low, you can try train with larger one-hot weight to keep MRR. Furthermore, just use the top1 candidate of stage 1 model and the rest use ranks from finetuned model will get better balanced performance of both MRR and NDCG!
 
 #### Evaluation
 You can directly evaluate a model use the following code: (please check the settings in configs/evaluate.yml)
