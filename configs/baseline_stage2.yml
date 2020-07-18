@@ -13,7 +13,7 @@ dataset:
 
 # Model related arguments
 model:
-  encoder: 'baseline_encoder_withP1'
+  encoder: 'baseline_encoder_withP1' #baseline_encoder_withP1 with disc_by_round #rva(encoder) with discvdr(decoder)
   decoder: 'disc_by_round'
 
   img_feature_size: 2048
@@ -23,12 +23,12 @@ model:
   head_num: 3
   dropout: 0.4
   dropout_fc: 0.25
-
+  ans_cls_num: 4
 
 # Optimization related arguments
 solver:
   batch_size: 12
-  num_epochs: 3 # you can try more epochs or change the lr
+  num_epochs: 3 # you can try more epochs or change the lr # experience is 2 or 3
   initial_lr: 0.002
   training_splits: "train"
   lr_gamma: 0.3

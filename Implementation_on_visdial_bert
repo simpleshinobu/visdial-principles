@@ -1,0 +1,7 @@
+1. It is really hard to eliminate the direct path from history to answer, so in the current stage, we suggest to remove history.
+You can change the dataloader files to do this.
+2. For implementation of P2, we recommend the R4 Loss which is found after the paper publication. Meanwhile, we suggest enlarge the learning rate.
+The experience is 3~5 epochs for stage 2. 200k iterations for stage 1.
+3. We also suggest to decrease the loss of object prediction and LM.
+4. We found that the ensemble of vd-bert result and our results can bring a further improvement though the single performance of vd-bert is about 75.5% and the ensemble of ours is lower than 75%
+5. About the fusion of NDCG and MRR, only use the first place of MRR result and others use the NDCG result is a good strategy, which we omitted in the challenge, of course other fusion strategy using first several result of MRR can make some trade-off. This fusion strategy will not hurt NDCG a lot. In the leaderboard, when you find the MRR and R@10 is different from the experience, the author may apply this strategy.

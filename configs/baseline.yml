@@ -5,6 +5,7 @@ dataset:
   image_features_test_h5: 'data/features_faster_rcnn_x101_test.h5'
   word_counts_json: 'data/visdial_1.0_word_counts_train.json'
   tokens_path: 'data/tokens.json'
+  glove_npy: 'data/glove.npy'
   img_norm: 1
   concat_history: false
   max_sequence_length: 20
@@ -13,7 +14,7 @@ dataset:
 
 # Model related arguments
 model:
-  encoder: 'baseline_encoder_withP1' #baseline_encoder_withP1
+  encoder: 'baseline_encoder_withP1' #baseline_encoder_withP1 with disc_by_round #rva(encoder) with discvdr(decoder)
   decoder: 'disc_by_round'
 
   img_feature_size: 2048
@@ -23,11 +24,11 @@ model:
   head_num: 3
   dropout: 0.4 # can change 0.4 to 0.3, because a smaller lr (about 0.3) is better
   dropout_fc: 0.25 # can change 0.25 to 0.1, because a smaller lr (about 0.1) is better
-
+  ans_cls_num: 4
 
 # Optimization related arguments
 solver:
-  batch_size: 128 # 64 x num_gpus is a good rule of thumb
+  batch_size: 128 # 16 for 10 rounds (rva)
   num_epochs: 15
   initial_lr: 0.004 # general is 0.004
   training_splits: "train"

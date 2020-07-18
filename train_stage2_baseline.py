@@ -259,6 +259,18 @@ def get_1round_idx_batch_data(batch, rnd, idx):  ##to get 1 round data with batc
             pass
     return temp_train_batch
 
+def get_1round_idx_batch_data_forrva(batch, rnd, idx):  ##to get 1 round data with batch_size = 1
+    temp_train_batch = {}
+    for key in batch:
+        if key in ['img_feat']:
+            temp_train_batch[key] = batch[key][idx * 2:idx * 2 + 2].to(device)
+        elif key in ['ans_ind']:
+            temp_train_batch[key] = batch[key][idx * 2:idx * 2 + 2][:, rnd].to(device)
+        elif key in ['ques', 'ques_len', 'hist_len', 'hist','opt', 'opt_len']:
+            temp_train_batch[key] = batch[key][idx * 2:idx * 2 + 2][:, :rnd + 1].to(device)
+        else:
+            pass
+    return temp_train_batch
 
 for epoch in range(start_epoch, config["solver"]["num_epochs"]):
     model.train()
@@ -275,13 +287,18 @@ for epoch in range(start_epoch, config["solver"]["num_epochs"]):
                 sample_idx = ndcg_id_list.index(batch['img_ids'][idx * 2 + b].item())
                 final_round = sample[sample_idx]['round_id'] - 1
                 rnd = final_round
+                ##for 1 round
                 temp_train_batch = get_1round_idx_batch_data(batch, rnd, idx)
                 output = model(temp_train_batch)[b]  ## this is only for avoid bug, no other meanings
+                ##for 10 round (rva)
+                # temp_train_batch = get_1round_idx_batch_data_forrva(batch, rnd, idx)
+                # output = model(temp_train_batch)[b][-1]
+                ##end 10 round (rva)
                 target = batch["ans_ind"][b, rnd].to(device)
                 rs_score = sample[sample_idx]['relevance']
                 cuda_device = output.device
                 if loss_function == 'R0':  # R0 loss (distance)
-                    # batch_loss = 0
+                    # batch_loss = 0 #set this for higher NDCG score
                     batch_loss = criterion(output.view(-1, output.size(-1)),
                                            target.view(-1))  # this is to keep MRR, can be deleted
                     rs_score = torch.tensor(rs_score).to(cuda_device)
@@ -377,6 +394,10 @@ for i, batch in enumerate(val_dataloader):
         output = torch.cat((output, model(temp_train_batch).view(-1, 1, 100).detach()), dim=1)
         optimizer.zero_grad()
         ###obtain b 10 100 scores
+    ###for 10 rounds(rva)
+    # with torch.no_grad():
+    #     output = model(batch)
+    ##end 10 rounds
     sparse_metrics.observe(output, batch["ans_ind"])
     if "relevance" in batch:
         output = output[torch.arange(output.size(0)), batch["round_id"] - 1, :]

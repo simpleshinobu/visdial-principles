@@ -209,7 +209,7 @@ ndcg = NDCG()
 if args.load_pthpath == "":
     start_epoch = 0
 else:
-    start_epoch = int(args.load_pthpath.split("_")[-1][:-4])
+    start_epoch = int(args.load_pthpath.split("_")[-1][:-4])  + 1
 
     model_state_dict, optimizer_state_dict = load_checkpoint(args.load_pthpath)
     if isinstance(model, nn.DataParallel):
@@ -252,6 +252,19 @@ for epoch in range(start_epoch, config["solver"]["num_epochs"]):
             batch_loss.backward()
             count_loss += batch_loss.data.cpu().numpy()
             optimizer.step()
+        ##for rva, apply 10 rounds because of the implementation of rva is hard to separate into 10 parts, according to the original authors
+        ##note that whether separate into 10 rounds here will not influence the conclusion in our paper
+        ##but it is interesting topic in the future
+        # for key in batch:
+        #     batch[key] = batch[key].to(device)
+        # output = model(batch)
+        # target = batch["ans_ind"].to(device)
+        # batch_loss = criterion(output.view(-1, output.size(-1)), target.view(-1))
+        # batch_loss.backward()
+        # count_loss += batch_loss.data.cpu().numpy() * 10.0
+        # optimizer.step()
+        # optimizer.zero_grad()
+        ###################whole 10 rounds part end
         if i % int(iterations / 10) == 0 and i != 0:
             mean_loss = (count_loss / float(iterations / 10)) / 10.0
             print('(step', i, 'in', int(iterations), ') mean_loss:', mean_loss, 'Time:',
@@ -283,6 +296,10 @@ for epoch in range(start_epoch, config["solver"]["num_epochs"]):
                 temp_train_batch = get_1round_batch_data(batch, rnd)
                 output = torch.cat((output, model(temp_train_batch).view(-1, 1, 100).detach()), dim=1)
                 optimizer.zero_grad()
+            ###for 10 rounds(rva)
+            # with torch.no_grad():
+            #     output = model(batch)
+            ##end 10 rounds
             sparse_metrics.observe(output, batch["ans_ind"])
             if "relevance" in batch:
                 output = output[torch.arange(output.size(0)), batch["round_id"] - 1, :]
