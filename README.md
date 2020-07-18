@@ -68,6 +68,7 @@ from the official [website](https://visualdialog.org/data):
 ```
 python train_stage1_baseline.py --validate --in-memory --save-model
 ```
+(Note: for other encoders, please follow the format and note in the code)
 2.different loss functions for answer score sampling (dense finetuning, R3 as default, because of the dense samples are rare, the results maybe a little bit unstable). Besides, we add another newest loss function R4 (Normalized BCE, which is better than R2, recommended).
 ```
 python train_stage2_baseline.py --loss-function R4 --load-pthpath checkpoints/baseline_withP1_checkpiont5.pth
