@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # VisDial-principles
 
 This repository is the updated PyTorch implementation for CVPR 2020 Paper "Two Causal Principles for Improving Visual Dialog", which is also the newest version for the Visual Dialog Challenge 2019 winner team (Here is the [report](https://drive.google.com/file/d/1fqg0hregsp_3USM6XCHx89S9JLXt8bKp/view)). For the detailed theories, please refer to our [paper](https://arxiv.org/abs/1911.10496). If you have any questions or suggestions, please email me (JIAXIN003@E.NTU.EDU.SG), (I do not usually browse my Github, so the reply to issues may be not on time).
@@ -86,7 +86,7 @@ python train_dict_stage1.py --save-model
 python train_dict_stage2.py --save-model --load-pthpath <pretrained dict from stage1>
 python train_dict_stage3.py --load-dict-pthpath <pretrained dict from stage1> --load-pthpath checkpoints/baseline_withP1_checkpiont5.pth
 ```
-Besides, after our code optimization, some implementations can get a little bit better results, but do not influence the conclusions of our principles. If you think the MRR score is too low, you can try to fuse the output logits of baseline and finetuned baseline with the formula: sigmoid(logit(ft))*(sigmoid(logit(base))+0.2) (empirical formula) (which can achieve MRR ~61 and NDCG ~72). Note that their effects should be carefully fused, not directly added.
+Besides, after our code optimization, some implementations can get a little bit better results, but do not influence the conclusions of our principles. If you think the MRR score is too low, you can try train with larger one-hot weight to keep MRR. Furthermore, just use the top1 candidate of stage 1 model and the rest use ranks from finetuned model will get better balanced performance of both MRR and NDCG!
 
 #### Evaluation
 You can directly evaluate a model use the following code: (please check the settings in configs/evaluate.yml)
