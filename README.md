@@ -8,11 +8,12 @@ Note that this repository is based on the official [code](https://github.com/bat
 If you find this work is useful in your research, please kindly consider citing:
 
 ```
-@article{qi2019two,
-  title={Two Causal Principles for Improving Visual Dialog},
+@inproceedings{qi2020two,
+  title={Two causal principles for improving visual dialog},
   author={Qi, Jiaxin and Niu, Yulei and Huang, Jianqiang and Zhang, Hanwang},
-  journal={arXiv preprint arXiv:1911.10496},
-  year={2019}
+  booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},
+  pages={10860--10869},
+  year={2020}
 }
 ```
 #### Dependencies
