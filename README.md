@@ -1,7 +1,7 @@
 
 # VisDial-principles
 
-This repository is the updated PyTorch implementation for CVPR 2020 Paper "Two Causal Principles for Improving Visual Dialog", which is also the newest version for the Visual Dialog Challenge 2019 winner team (Here is the [report](https://drive.google.com/file/d/1fqg0hregsp_3USM6XCHx89S9JLXt8bKp/view)). For the detailed theories, please refer to our [paper](https://arxiv.org/abs/1911.10496). If you have any questions or suggestions, please email me (JIAXIN003@E.NTU.EDU.SG), (I do not usually browse my Github, so the reply to issues may be not on time).
+This repository is the updated PyTorch implementation for CVPR 2020 Paper "Two Causal Principles for Improving Visual Dialog", which is also the newest version for the Visual Dialog Challenge 2019 winner team (Here is the [report](https://drive.google.com/file/d/1fqg0hregsp_3USM6XCHx89S9JLXt8bKp/view)). For the detailed theories, please refer to our [paper](https://arxiv.org/abs/1911.10496). 
 
 Note that this repository is based on the official [code](https://github.com/batra-mlp-lab/visdial), for the newest official code, please refer to [vi-bert version](https://github.com/vmurahari3/visdial-bert#setup-and-dependencies).
 
